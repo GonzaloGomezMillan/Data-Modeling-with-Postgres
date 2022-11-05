@@ -10,7 +10,7 @@ time_table_drop = "DROP TABLE IF EXISTS time"
 
 songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplays
                         (
-                        songplay_id int PRIMARY KEY,
+                        songplay_id SERIAL PRIMARY KEY,
                         start_time timestamp,
                         user_id int,
                         level varchar,
@@ -24,18 +24,19 @@ songplay_table_create = ("""CREATE TABLE IF NOT EXISTS songplays
 
 user_table_create = ("""CREATE TABLE IF NOT EXISTS users
                     (
-                    user_id int PRIMARY KEY,
-                    first_name varchar NOT NULL,
-                    last_name varchar NOT NULL,
-                    gender varchar,
-                    level varchar);
+                        user_id int PRIMARY KEY,
+                        first_name varchar NOT NULL,
+                        last_name varchar NOT NULL,
+                        gender varchar,
+                        level varchar
+                    );
                     """)
 
 song_table_create = ("""CREATE TABLE IF NOT EXISTS songs
                     (
                         song_id varchar PRIMARY KEY,
                         title varchar NOT NULL,
-                        artist_id varchar,
+                        artist_id varchar NOT NULL,
                         year int,
                         duration float);
                     """)
@@ -52,7 +53,7 @@ artist_table_create = ("""CREATE TABLE IF NOT EXISTS artists
 
 time_table_create = ("""CREATE TABLE IF NOT EXISTS time
                     (
-                        start_time datetime NOT NULL,
+                        start_time timestamp PRIMARY KEY,
                         hour int, 
                         day int,
                         week int,
@@ -79,10 +80,12 @@ songplay_table_insert = ("""INSERT INTO songplay
                         VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s);
                         """)
 
-user_table_insert = ("""INSERT INTO user
+user_table_insert = ("""INSERT INTO users
                     (
                         user_id,first_name,last_name,gender,level
                     )
+                    VALUES(%s, %s, %s, %s, %s)
+                    ON CONFLICT (user_id) DO UPDATE SET level = EXCLUDED.level;
                     """)
 
 song_table_insert = ("""INSERT INTO songs
@@ -105,13 +108,18 @@ time_table_insert = ("""INSERT INTO time
                         (
                         start_time,hour , day ,week ,month ,year ,weekday
                         )
-                        VALUES(%s, %s, %s, %s, %s, %s)
+                        VALUES(%s, %s, %s, %s, %s, %s, %s);
                         """)
 
 # FIND SONGS
 
 song_select = ("""
-""")
+                SELECT songs.song_id, artists.artist_id 
+                FROM songs
+                JOIN artists
+                ON songs.artist_id = artists.artist_id
+                WHERE songs.title = %s AND artists.name = %s AND songs.duration = %s;
+                """)
 
 # QUERY LISTS
 
