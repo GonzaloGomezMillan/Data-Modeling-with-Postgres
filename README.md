@@ -64,9 +64,9 @@ They'd like a data engineer to create a Postgres database with tables designed t
     - *weekday* - int
 ---
 ## **Licensing, Authors, Acknowledgements, etc.**
-- **Author**: The author of this analysis is Gonzalo Gomez Millan
+- **Author**: The author of this project is Gonzalo Gomez Millan
 - **Acknowledgment**: Also noteworthy is the work of **Udacity** in promoting the performance of this analysis as one of the projects in order to pass the Data Engineering Nanodegree Program.
 
 **Acknowledgments**: 
 - I wanted to thank **Kaggle** for sharing the dataset that led to this analysis.
-- Also noteworthy is the work of **Udacity** in promoting the performance of this analysis as one of the projects in order to pass the Data Scientist Nanodegree.
+- AAlso noteworthy is the work of **Udacity** by promoting  this analysis as one of the projects of the Data Engineering Nanodegree Program.
