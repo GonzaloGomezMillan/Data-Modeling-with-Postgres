@@ -6,6 +6,16 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    '''
+    This function reads the json file and insert the records in the correspondent tables.
+
+    INPUT:
+    cur: Allows Python code to execute PostgreSQL command in a database session
+    filepath - string: path to access to the json file
+
+    OUTPUT:
+    None
+    '''
     # open song file
     df = pd.read_json(filepath, lines = True)
 
@@ -19,6 +29,16 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    '''
+    This function reads the json file and insert the records in the correspondent tables.
+
+    INPUT:
+    cur: Allows Python code to execute PostgreSQL command in a database session
+    filepath - string: path to access to the json file
+
+    OUTPUT:
+    None
+    '''
     # open log file
     df = pd.read_json(filepath, lines = True)
 
@@ -61,6 +81,19 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    '''
+    Function which find all the files in the directory and execute the processing operation defined in "func" to create the final database.
+
+    INPUT:
+    cur - cursor: Allows Python code to execute PostgreSQL command in a database session
+    conn - connection object: connection to the database session
+    filepath - string: url to get access to the files
+    func - string: defines the function which will be applied to the files found in the filepath
+
+    OUTPUT:
+    None
+
+    '''
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -80,6 +113,15 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    '''
+    Main functions which perform the execution of all the code.
+
+    INPUT:
+    None
+
+    OUTPUT:
+    None
+    '''
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
